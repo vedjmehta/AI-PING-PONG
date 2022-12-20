@@ -12,3 +12,7 @@ h4{
 body{
 text-align: center;
 }
+
+canvas {
+    border: 5px black solid;
+}
