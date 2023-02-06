@@ -21,6 +21,12 @@ var ball = {
     dy:3
 }
 
+
+wristX=0;
+wristY=0;
+results = "";
+score = "";
+
 function setup(){
   canvas =  createCanvas(700,600);
   video = createCapture(VIDEO);
@@ -30,10 +36,20 @@ function setup(){
 
 
 	poseNet = ml5.poseNet(video,modelLoaded);
-	
+	poseNet.on('pose',gotPoses);
 
 }
 
+
+function gotPoses(results) {
+  if(results.length > 0) {
+    console.log(results)
+    wristX = results[0].pose.wrist.x;
+    wristY = results[0].pose.wrist.y;
+    score = results[0].pose.wrist.score;
+    
+  }
+  }
 function modelLoaded() {
   console.log('Model Loaded! :)!');
   }
@@ -42,6 +58,12 @@ function modelLoaded() {
 
 function draw(){
 
+
+  if(score>0.2) {
+    fill("red");
+ stroke("black");
+   circle(wristX,wristY,25);
+  }
  background(0); 
 
  fill("black");
